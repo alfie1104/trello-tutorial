@@ -40,12 +40,12 @@ export const MobileSidebar = () => {
         size="sm"
       >
         <Menu className="h-4 w-4" />
-        <Sheet open={isOpen} onOpenChange={onClose}>
-          <SheetContent side="left" className="p-2 pt-10">
-            <Sidebar storageKey="t-sidebar-mobile-state" />
-          </SheetContent>
-        </Sheet>
       </Button>
+      <Sheet open={isOpen} onOpenChange={onClose}>
+        <SheetContent side="left" className="p-2 pt-10">
+          <Sidebar storageKey="t-sidebar-mobile-state" />
+        </SheetContent>
+      </Sheet>
     </>
   );
 };
