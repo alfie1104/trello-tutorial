@@ -76,6 +76,47 @@ export const ListContainer = ({ data, boardId }: ListContainerProps) => {
       if (!destList.cards) {
         destList.cards = [];
       }
+
+      // Moving the card in the same list
+      if (source.droppableId === destination.droppableId) {
+        const reorderedCards = reorder(
+          sourceList.cards,
+          source.index,
+          destination.index
+        );
+
+        reorderedCards.forEach((card, idx) => {
+          card.order = idx;
+        });
+
+        sourceList.cards = reorderedCards;
+
+        setOrderedData(newOrderedData);
+
+        // TODO: Trigger Server Action
+      } else {
+        // User moves the card to another list
+        //Remove card from the source list
+        const [movedCard] = sourceList.cards.splice(source.index, 1);
+
+        // Assign the new listId to the moved card
+        movedCard.listId = destination.droppableId;
+
+        // Add card to the destination list
+        destList.cards.splice(destination.index, 0, movedCard);
+
+        sourceList.cards.forEach((card, idx) => {
+          card.order = idx;
+        });
+
+        // Update the order for each card in the destination list
+        destList.cards.forEach((card, idx) => {
+          card.order = idx;
+        });
+
+        setOrderedData(newOrderedData);
+        // TODO : Trigger Server Action
+      }
     }
   };
 
